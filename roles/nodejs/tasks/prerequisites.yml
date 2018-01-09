@@ -1,0 +1,23 @@
+- name: Install PIP
+  yum: 
+    name: "{{ item }}"
+    state: installed
+  with_items:
+     - python-pip
+     - pyOpenSSL
+
+- name: Upgrade pip
+  pip: 
+    name: pip 
+    state: present 
+    extra_args: "--upgrade"
+
+- name: Install pip packages
+  pip: 
+    name: "{{ item }}" 
+    state: present
+  with_items:
+     ndg-httpsclient
+     pyasn1
+     urllib3
+

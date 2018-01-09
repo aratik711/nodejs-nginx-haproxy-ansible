@@ -1,0 +1,5 @@
+---
+el_version: "{% if ( nodejs_version.startswith('6.12.') or  nodejs_version.startswith('6.11.') ) %}{% else %}el6.{% endif %}"
+nodejs_source_path_arch:
+  i386: /el/6/i386/nodejs-{{nodejs_version}}-1nodesource.{{ el_version }}i686.rpm
+  x86_64: /el/6/x86_64/nodejs-{{nodejs_version}}-1nodesource.{{ el_version }}x86_64.rpm

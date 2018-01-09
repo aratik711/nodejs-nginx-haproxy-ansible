@@ -1,0 +1,15 @@
+var http = require('http');
+http.createServer(function (req, res) {
+
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+
+  var date = new Date();
+  var timestamp = Math.floor(Date.now() / 1000)
+
+  res.write('Timestamp: '+timestamp.toString()+'\n');
+  res.write('Date: '+date.toString());
+
+  res.end();
+}).listen({{ ts_app_port }}, "127.0.0.1");
+
+console.log('Server running at http://127.0.0.1:{{ ts_app_port }}/');

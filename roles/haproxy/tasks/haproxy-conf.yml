@@ -1,0 +1,37 @@
+---
+
+- name: set selinux to permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Copy haproxy.cfg
+  template:
+    src: haproxy.cfg.j2
+    dest: "/etc/haproxy/haproxy.cfg"
+
+- name: Add mappings to /etc/haproxy/haproxy.cfg
+  lineinfile:
+    path: /etc/haproxy/haproxy.cfg
+    line: |
+      server  {{ item }} {{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}:{{ nginx_port }} check
+    regexp: "^server  {{ item }} {{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}:{{ nginx_port }} check"
+    insertafter: "^server  {{ item }} {{ hostvars[item]['ansible_eth0']['ipv4']['address'] }}:{{ nginx_port }} check"
+  with_items: "{{ groups['nginx'] }}"
+  notify: restart_haproxy
+
+- meta: flush_handlers
+
+- name: Check if port {{ haproxy_port }} is listening
+  wait_for:
+    port: "{{ haproxy_port }}"
+    delay: 5
+    timeout: 10
+    msg: "Timeout waiting for haproxy port {{ haproxy_port }} to respond"
+  register: port_check
+  ignore_errors: yes
+
+- name: Try to restart haproxy if not started
+  service: name=haproxy state=started enabled=yes
+  when: port_check.failed == true
+

@@ -1,0 +1,22 @@
+---
+
+- import_tasks: python-install.yml
+
+- name: Install nodejs rpm
+  yum:
+    name: >
+      {{
+      nodejs_source_url_base +
+      nodejs_source_pub +
+      nodejs_source_path_arch[ansible_userspace_architecture]
+      }}
+    state: present
+
+- name: Install development tools
+  yum: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gcc-c++
+    - make
+

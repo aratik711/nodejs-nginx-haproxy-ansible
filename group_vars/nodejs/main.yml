@@ -1,0 +1,3 @@
+---
+nodejs_instance_user: "{{ lookup('env','NODEJS_USER') }}"
+nodejs_version: "6.12.2"

@@ -1,0 +1,11 @@
+---
+# tasks file for haproxy
+
+- import_tasks: haproxy-install.yml
+
+- import_tasks: sysctl.yml
+
+- import_tasks: iptables.yml
+
+- import_tasks: haproxy-conf.yml
+

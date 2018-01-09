@@ -1,0 +1,13 @@
+---
+
+- name: install epel
+  yum:
+    name: epel-release
+    state: present
+
+- name: install nginx
+  yum:
+    name: nginx
+    enablerepo: epel
+    state: present
+

@@ -1,0 +1,8 @@
+---
+# tasks file for nodejs
+- import_tasks: prerequisites.yml
+- import_tasks: nodejs-pub.yml
+- import_tasks: arch.yml
+- import_tasks: nodejs-install.yml
+- import_tasks: pm2.yml
+

@@ -1,0 +1,3 @@
+---
+node_major_ver: "{{ nodejs_version.split('.')[0] }}"
+nodejs_source_pub: "/pub_{{ node_major_ver }}.x"

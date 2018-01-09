@@ -1,0 +1,13 @@
+---
+
+- name: Ensure iptables is installed.
+  package: name=iptables state=installed
+
+- name: Set Port {{ haproxy_port }} haproxy Rule
+  iptables:
+    chain: INPUT
+    jump: ACCEPT
+    protocol: tcp
+    destination_port: "{{ haproxy_port }}"
+    comment: 'Accept all haproxy traffic'
+

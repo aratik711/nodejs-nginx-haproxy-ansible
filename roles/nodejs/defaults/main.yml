@@ -1,0 +1,3 @@
+---
+# defaults file for nodejs
+nodejs_source_url_base: "http://rpm.nodesource.com"

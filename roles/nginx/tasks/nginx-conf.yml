@@ -1,0 +1,56 @@
+---
+
+- name: Get ulimit
+  command: /bin/bash -c "ulimit -n"
+  register: ulimit_cmd
+
+- set_fact:
+    nginx_ulimit: "{{ ulimit_cmd.stdout }}"
+
+- name: ansible create directory /var/www
+  file:
+    path: /var/www
+    state: directory
+
+- name: Copy nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: "/etc/nginx/nginx.conf"
+
+- name: Copy default.conf
+  template:
+    src: default.conf.j2
+    dest: "/etc/nginx/conf.d/default.conf"
+  notify: restart-nginx
+
+- name: set selinux to permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Copy local.html
+  template:
+    src: local.html.j2
+    dest: "/var/www/local.html"
+
+- name: Copy availability.html
+  template:
+    src: availability.html.j2
+    dest: "/var/www/availability.html"
+  notify: restart-nginx
+
+- meta: flush_handlers
+
+- name: Check if port {{ nginx_port }} is listening
+  wait_for:
+    port: "{{ nginx_port }}"
+    delay: 5
+    timeout: 10
+    msg: "Timeout waiting for nginx port {{ nginx_port }} to respond"
+  register: port_check
+  ignore_errors: yes
+
+- name: Try to restart nginx if not started
+  service: name=nginx state=started enabled=yes
+  when: port_check.failed == true
+

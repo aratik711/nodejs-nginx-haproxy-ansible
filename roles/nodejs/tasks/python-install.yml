@@ -1,0 +1,12 @@
+---
+
+- name: Install SCL repo
+  yum:
+    name: centos-release-scl
+    state: present
+
+- name: Install python software
+  yum:
+    name: python27
+    state: present
+

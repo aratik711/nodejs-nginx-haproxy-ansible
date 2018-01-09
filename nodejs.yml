@@ -1,0 +1,16 @@
+---
+
+# Installation and configuration of nodejs
+
+- hosts: nodejs
+  user: "{{ nodejs_instance_user }}"
+  become: yes
+  become_method: sudo
+  connection: ssh
+  pre_tasks:
+    - name: Fail if OS is not Centos 6
+      fail:
+        msg: "The playbook only supports Centos 6"
+      when: "ansible_distribution != 'CentOS' and ansible_distribution_major_version != '6'"
+  roles:
+     - { role: nodejs, when: "ansible_distribution == 'CentOS' and ansible_distribution_major_version == '6'" }

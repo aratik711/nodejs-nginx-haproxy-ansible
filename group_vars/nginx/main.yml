@@ -1,0 +1,3 @@
+---
+nginx_instance_user: "{{ lookup('env','NGINX_USER') }}"
+

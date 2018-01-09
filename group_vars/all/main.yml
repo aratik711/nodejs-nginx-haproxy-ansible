@@ -1,0 +1,4 @@
+---
+
+nodejs_port: "{{ lookup('env','NODEJS_PORT') }}"
+nginx_port: "{{ lookup('env','NGINX_PORT') }}"

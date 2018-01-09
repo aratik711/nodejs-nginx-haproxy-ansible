@@ -1,0 +1,4 @@
+---
+haproxy_instance_user: "{{ lookup('env','HAPROXY_USER') }}"
+
+haproxy_port: "{{ lookup('env','HAPROXY_PORT') }}"

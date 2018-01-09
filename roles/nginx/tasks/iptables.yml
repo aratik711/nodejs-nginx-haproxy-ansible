@@ -1,0 +1,13 @@
+---
+
+- name: Ensure iptables is installed.
+  package: name=iptables state=installed
+
+- name: Add iptables Port {{ nginx_port }} nginx Rule
+  iptables:
+    chain: INPUT
+    jump: ACCEPT
+    protocol: tcp
+    destination_port: "{{ nginx_port }}"
+    comment: 'Accept all nginx traffic'
+

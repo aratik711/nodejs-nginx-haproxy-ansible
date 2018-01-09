@@ -1,0 +1,5 @@
+---
+# vars file for nodejs
+app_user: "{{ nodejs_instance_user }}"
+ts_app_port: "{{ nodejs_port }}"
+server_id: ts_app

@@ -1,0 +1,13 @@
+---
+# tasks file for nginx
+
+- import_tasks: nginx-install.yml
+
+- import_tasks: sysctl.yml
+
+- import_tasks: iptables.yml
+
+- import_tasks: nginx-conf.yml
+
+
+
